@@ -19,7 +19,7 @@ install_github("brossardMyriam/RegionScan")
 Please see the *add vignette*
 
 ## Overview of `RegionScan` capabilities
- <img src="https://github.com/brossardMyriam/RegionScan/Fig1_Sept12_CIHR.gif" />
+ <img src="https://github.com/brossardMyriam/RegionScan/blob/main/Fig1_Sept12_CIHR.gif" />
 
 ## Authors
 - Myriam Brossard (brossard@lunenfeld.ca), author and main developer
