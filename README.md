@@ -26,7 +26,9 @@ Please see the *add vignette*
 - Yun J Yoo, contributor
 
 ## Citation
-[ link to biorxiv paper]
+RegionScan : A comprehensive R package for region-level genome-wide association testing with integration and visualization of multiple-variant and single-variant hypothesis testing.
+Brossard M, Roshandel D, Luo K, Yavartanoo F, Paterson AD, Yoo YJ, Bull SB.
+DOI: https://www.biorxiv.org/content/10.1101/2024.03.04.582374v1
 
 ## License
 This package is released under the [GNU General Public License (GPL) v3.0.](https://www.gnu.org/licenses/gpl-3.0.html)
