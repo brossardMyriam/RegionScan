@@ -9,7 +9,7 @@ The detailed information about `RegionScan` can be found in our in our [preprint
 ## Download and install
 Use the `devtools` package (available from
 [CRAN](http://cran-r.c3sl.ufpr.br/web/packages/devtools/index.html)) to
-install automatically from this GitHub repository:
+install automatically from this repository:
 
 ```{r, eval=TRUE}
 library(devtools)
