@@ -22,7 +22,7 @@ Please see the *add vignette*
 Overview of RegionScan for genome-wide region-level association analysis on chr19 (to facilitate visualization) in a Usage case study (see details in our [preprint](https://www.biorxiv.org/content/10.1101/2024.03.04.582374v1)). 
 ![image](https://github.com/brossardMyriam/RegionScan/assets/49451601/615abbbe-0296-4f4d-8d17-137c09511a98)
 
-## Authors
+## Contributors
 - Myriam Brossard (brossard@lunenfeld.ca), author and main developer
 - Yun J Yoo, contributor
 
