@@ -1,9 +1,10 @@
-# RegionScan
+# RegionScan : A comprehensive R package for region-level genome-wide association testing with integration and visualization of multiple-variant and single-variant hypothesis testing 
 
 ## Introduction
 `RegionScan` is a R package for comprehensive and scalable region-level genome-wide association testing of alternative region-level multiple-variant and single-variant statistics and visualization of the results. It implements various state-of-the-art region-level tests to improve signal detection under heterogeneous genetic architectures and comparison of multiple-variant region-level and single-variant test results. It leverages LD-based genomic partitioning for LD-adaptive region definition. `RegionScan` is compatible with VCF input file format, and accommodates parallel region-level processing and analysis to improve computational time and memory efficiency. It also provide options for analysis of multi-allelic variants, unbalanced binary phenotypes, with detailed outputs for results interpretation, and utility functions for visualization, comparison, and interpretation.
 
-The detailed information about `RegionScan` can be found in our paper 'link to biorxiv paper??'.
+The detailed information about `RegionScan` can be found in our in our [preprint](https://www.biorxiv.org/content/10.1101/2024.03.04.582374v1). 
+
 
 ## Download and install
 Use the `devtools` package (available from
