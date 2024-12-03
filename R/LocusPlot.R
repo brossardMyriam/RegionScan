@@ -1,15 +1,15 @@
 #' LocusPlot : produces a pdf file including a plot of region-level results for a set of contiguous regions
 #'
-#' @chr: chromosome number of the locus to plot
-#' @regionlist: list of contiguous regions to plot
-#' @pheno: name of the phenotype 
-#' @regscanout: output object from regionscan 
-#' @p_region: region-level significance level (default is 5.86e-07)
-#' @p_single: significance-level for single-SNP tests (default is  5e-8)
-#' @real_size: based on physical size of the regions (default is TRUE)
-#' @allSNPs: plot single-SNP results for pruned SNPs as well  (default is FALSE)
-#' @region_tests: specify the list of region-level tests to plot (default is NULL, all tests will be plotted)
-#' @outname: name of the output file produced 
+#' @param chr: chromosome number of the locus to plot
+#' @param regionlist: list of contiguous regions to plot
+#' @param pheno: name of the phenotype 
+#' @param regscanout: output object from regionscan 
+#' @param p_region: region-level significance level (default is 5.86e-07)
+#' @param p_single: significance-level for single-SNP tests (default is  5e-8)
+#' @param real_size: based on physical size of the regions (default is TRUE)
+#' @param allSNPs: plot single-SNP results for pruned SNPs as well  (default is FALSE)
+#' @param region_tests: specify the list of region-level tests to plot (default is NULL, all tests will be plotted)
+#' @param outname: name of the output file produced 
 #' @export
 
 LocusPlot <- function(chr, regionlist ,pheno=pheno, regscanout , p_region = 5.86e-07,  p_single = 5e-8, 
@@ -47,11 +47,11 @@ LocusPlot <- function(chr, regionlist ,pheno=pheno, regscanout , p_region = 5.86
   sg_snp_union$type <- "single SNP"
   #  pv=-log10(var_results$sg.pval[single_indi]) )
 
-  sg_snp_union_minp <- data.frame()
-  for (i in regionlist){
-    n <- sg_snp_union [sg_snp_union$region==i,]
-    sg_snp_union_minp <- rbind(sg_snp_union_minp, n[which.max(n$pv),])
-  }
+  # sg_snp_union_minp <- data.frame()
+  # for (i in regionlist){
+    # n <- sg_snp_union [sg_snp_union$region==i,]
+    # sg_snp_union_minp <- rbind(sg_snp_union_minp, n[which.max(n$pv),])
+  # }
 
   sg_snp_union$region_pos <- 0
   for (i in regionlist){
@@ -59,14 +59,14 @@ LocusPlot <- function(chr, regionlist ,pheno=pheno, regscanout , p_region = 5.86
       i-0.5+(sg_snp_union$bp[sg_snp_union$region==i]-unique(region_union$start.bp[region_union$region==i]))/(unique(region_union$end.bp[region_union$region==i])-unique(region_union$start.bp[region_union$region==i]))  
   }
   
-  sg_snp_union_minp$region_pos <- 0
-  for (i in regionlist){
-    sg_snp_union_minp$region_pos[sg_snp_union_minp$region==i] <- 
-      i-0.5+(sg_snp_union_minp$bp[sg_snp_union_minp$region==i]-region_union$start.bp[region_union$region==i][1])/(region_union$end.bp[region_union$region==i][1]-region_union$start.bp[region_union$region==i][1])  
-  }
+  # sg_snp_union_minp$region_pos <- 0
+  # for (i in regionlist){
+    # sg_snp_union_minp$region_pos[sg_snp_union_minp$region==i] <- 
+      # i-0.5+(sg_snp_union_minp$bp[sg_snp_union_minp$region==i]-region_union$start.bp[region_union$region==i][1])/(region_union$end.bp[region_union$region==i][1]-region_union$start.bp[region_union$region==i][1])  
+  # }
   
-  sg_snp_union_minp$pos <- region_union$pos[1:length(regionlist)]
-  sg_snp_union_minp$type <- "single SNP minP"
+  # sg_snp_union_minp$pos <- region_union$pos[1:length(regionlist)]
+  # sg_snp_union_minp$type <- "single SNP minP"
   #sg_snp_union$region_pos<-as.integer(subset(var_results, (chr==chr & var_results$region %in% regionlist))[,"bp"])
 
   #####  plot region and all single SNPs in these regions
@@ -102,7 +102,7 @@ LocusPlot <- function(chr, regionlist ,pheno=pheno, regscanout , p_region = 5.86
     ggplot2::geom_rect(data=NULL,aes(xmin=xmin_-0.5, xmax=xmin_+0.5,ymin=0.01,ymax=Inf),  fill="dark grey",alpha=0.6)+
     ggplot2::geom_segment(data=region_union,linewidth=3,aes(x=region-0.5, xend=region+0.5, y=pv, yend=pv, color=test)) +
     ggplot2::geom_point(data=sg_snp_union,aes(x=region_pos, y=pv,shape=type,size=type), color="#00BFC4")+
-    ggplot2::geom_line(data=sg_snp_union_minp,aes(x=region_pos, y=pv,color=type), alpha = 1)+
+    #ggplot2::geom_line(data=sg_snp_union_minp,aes(x=region_pos, y=pv,color=type), alpha = 1)+
     ggplot2::geom_line(data=region_union,aes(x=region, y=pv,color=test),alpha = 1)+
     ggplot2::geom_hline(yintercept = -log10(p_region), color = "#F8766D", linetype = "dashed")+
     ggplot2::geom_hline(yintercept = -log10(p_single), color = "#00BFC4", linetype = "dashed")+

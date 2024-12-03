@@ -1,16 +1,16 @@
 #' MiamiPlot : produces a pdf file including a miami plot for a pair of tests specified 
 #'
-#' @regscanout : regionscan output object
-#' @p_region: significance threshold for region-level tests (default is FALSE)
-#' @p_single: significance threshold for single-SNP tests  (default is 2)
-#' @test1: specify which test (from the regionscan output) will be plotted on the top panel; must be  Wald.p, MLCB.p, PC80.p, SKAT.p,  SKATO.p, GATES.p,  SimpleM.p or sglm.pvalue
-#' @test2 : specify which test (from the regionscan output) will be plotted on the bottom panel ; must be  Wald.p, MLCB.p, PC80.p, SKAT.p,  SKATO.p, GATES.p,  SimpleM.p or sglm.pvalue
-#' @allSNPs: if TRUE, includes all single-SNP results (including SNPs pruned on LD; default is FALSE)
-#' @outname=name for the output file (without extension) 
-#' @chr= chromosome name (to zoom on a particular region), optional
-#' @zoom= region to zoom (e.g. chr22:100000:200000)
-#' @test1_highlight: region to highlight (e.g. chr22:100000:200000)
-#' @test2_highlight: region to highlight (e.g. chr22:100000:200000)
+#' @param regscanout : regionscan output object
+#' @param p_region: significance threshold for region-level tests (default is FALSE)
+#' @param p_single: significance threshold for single-SNP tests  (default is 2)
+#' @param test1: specify which test (from the regionscan output) will be plotted on the top panel; must be  Wald.p, MLCB.p, PC80.p, SKAT.p,  SKATO.p, GATES.p,  SimpleM.p or sglm.pvalue
+#' @param test2 : specify which test (from the regionscan output) will be plotted on the bottom panel ; must be  Wald.p, MLCB.p, PC80.p, SKAT.p,  SKATO.p, GATES.p,  SimpleM.p or sglm.pvalue
+#' @param allSNPs: if TRUE, includes all single-SNP results (including SNPs pruned on LD; default is FALSE)
+#' @param outname=name for the output file (without extension) 
+#' @param chr= chromosome name (to zoom on a particular region), optional
+#' @param zoom= region to zoom (e.g. chr22:100000:200000)
+#' @param test1_highlight: region to highlight (e.g. chr22:100000:200000)
+#' @param test2_highlight: region to highlight (e.g. chr22:100000:200000)
 #' @export
 
 
@@ -37,9 +37,9 @@ MiamiPlot  <- function( regscanout , p_region = 5.86e-07,  p_single = 5e-8,
   		start<-x$start.bp
   		end<-x$end.bp
   		Wald.p<-x$Wald.p
-  		MLCB.p<-x$MLCB.p
   		PC80.p<-x$PC80.p
-  		SKAT.p<-x$SKAT.p
+		MLCB.p<-x$MLCB.p
+		SKAT.p<-x$SKAT.p
   		SKATO.p<-x$SKATO.p
   		GATES.p<-x$GATES.p
   		SimpleM.p<-x$SimpleM.p
@@ -60,7 +60,7 @@ MiamiPlot  <- function( regscanout , p_region = 5.86e-07,  p_single = 5e-8,
   RegionScan_prep2 <-RegionScan_prep[order(RegionScan_prep$chr,RegionScan_prep$region),]
   RegionScan_GRange <- toGRanges(data.frame(chr=paste("chr",RegionScan_prep2$chr,sep=""), start=RegionScan_prep2$bp, end=RegionScan_prep2$bp))
   maxy<-max(-log10(na.omit(as.numeric(as.character(c(RegionScan_prep2[,test1],RegionScan_prep2[,test2]))))))+5
-  region_tests<-c("MLCB.p","MLCZ.p","LCB.p","LCZ.p","Wald.p","PC80.p","SKAT.p","SKATO.p","MinPJ.p","GATES.p","simpleM.p")
+  region_tests<-c("MLCB.p","MLCZ.p","LCB.p","LCZ.p","Wald.p","PC80.p","SKAT.p","SKATO.p","GATES.p","simpleM.p")
   
   if(isTRUE(test1%in%region_tests) & isTRUE(test2%in%region_tests)) {  
     pdf(paste(outname, ".pdf",sep=""),height=7, width=14)

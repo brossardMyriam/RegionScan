@@ -18,6 +18,29 @@ MiamiPlot(
   test2_highlight = NULL
 )
 }
+\arguments{
+\item{regscanout}{: regionscan output object}
+
+\item{test2}{: specify which test (from the regionscan output) will be plotted on the bottom panel ; must be  Wald.p, MLCB.p, PC80.p, SKAT.p,  SKATO.p, GATES.p,  SimpleM.p or sglm.pvalue}
+
+\item{p_region:}{significance threshold for region-level tests (default is FALSE)}
+
+\item{p_single:}{significance threshold for single-SNP tests  (default is 2)}
+
+\item{test1:}{specify which test (from the regionscan output) will be plotted on the top panel; must be  Wald.p, MLCB.p, PC80.p, SKAT.p,  SKATO.p, GATES.p,  SimpleM.p or sglm.pvalue}
+
+\item{allSNPs:}{if TRUE, includes all single-SNP results (including SNPs pruned on LD; default is FALSE)}
+
+\item{outname=name}{for the output file (without extension)}
+
+\item{chr=}{chromosome name (to zoom on a particular region), optional}
+
+\item{zoom=}{region to zoom (e.g. chr22:100000:200000)}
+
+\item{test1_highlight:}{region to highlight (e.g. chr22:100000:200000)}
+
+\item{test2_highlight:}{region to highlight (e.g. chr22:100000:200000)}
+}
 \description{
 MiamiPlot : produces a pdf file including a miami plot for a pair of tests specified
 }

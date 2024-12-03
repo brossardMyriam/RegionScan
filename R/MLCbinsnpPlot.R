@@ -1,8 +1,8 @@
 #' MLCbinsnpPlot : produces a pdf file including the position of the SNPs along the chr per LD bin for the region specified
 #'
-#' @rscanout: chromosome number of the locus to plot
-#' @chr_: list of contiguous regions to plot
-#' @region_: name of the phenotype 
+#' @param rscanout: chromosome number of the locus to plot
+#' @param chr_: list of contiguous regions to plot
+#' @param region_: name of the phenotype 
 #' @export
 
 MLCbinsnpPlot <- function( rscanout, chr_, region_) 

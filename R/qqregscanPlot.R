@@ -1,8 +1,8 @@
 #' qqregscanPlot : qq plot for a specified test
 #'
-#' @regionout: output from regscan
-#' @outname: name of the output file
-#' @test_name: name of the test to be plotted
+#' @param regionout: output from regscan
+#' @param outname: name of the output file
+#' @param test_name: name of the test to be plotted
 #' @export
 
 qqregscanPlot  <- function( regionout , outname, test_name ) {  

@@ -17,6 +17,27 @@ LocusPlot(
   outname = NULL
 )
 }
+\arguments{
+\item{chr:}{chromosome number of the locus to plot}
+
+\item{regionlist:}{list of contiguous regions to plot}
+
+\item{pheno:}{name of the phenotype}
+
+\item{regscanout:}{output object from regionscan}
+
+\item{p_region:}{region-level significance level (default is 5.86e-07)}
+
+\item{p_single:}{significance-level for single-SNP tests (default is  5e-8)}
+
+\item{real_size:}{based on physical size of the regions (default is TRUE)}
+
+\item{allSNPs:}{plot single-SNP results for pruned SNPs as well  (default is FALSE)}
+
+\item{region_tests:}{specify the list of region-level tests to plot (default is NULL, all tests will be plotted)}
+
+\item{outname:}{name of the output file produced}
+}
 \description{
 LocusPlot : produces a pdf file including a plot of region-level results for a set of contiguous regions
 }
