@@ -10,7 +10,7 @@ SKATp <- function( data, pheno, covlist, binvector, pheno_type, geno_type ,is_do
 	}
 	
 	SKAT.null <- SKAT::SKAT_Null_Model( n.model,   data=as.data.frame(data), out_type=pheno_type )
-	SKAT.r <- SKAT::SKAT( genotype, SKAT.null, is_dosage=is_dosage,  kernel=SKAT_kernel, weights.beta=SKAT_weights_beta, SKAT_weights=SKAT_weights )
-	SKATw.r <- SKAT::SKAT( genotype, SKAT.null, is_dosage=is_dosage, kernel=SKAT_kernel,  weights.beta=SKAT_weights_beta, SKAT_weights=SKAT_weights, method="optimal.adj")	
+	SKAT.r <- SKAT::SKAT( genotype, SKAT.null, is_dosage=is_dosage,  kernel=SKAT_kernel, weights.beta=SKAT_weights_beta, weights=SKAT_weights )
+	SKATw.r <- SKAT::SKAT( genotype, SKAT.null, is_dosage=is_dosage, kernel=SKAT_kernel,  weights.beta=SKAT_weights_beta, weights=SKAT_weights, method="optimal.adj")	
 	return( list( SKAT.p=SKAT.r$p.value, SKATO.p=SKATw.r$p.value ) )
 }

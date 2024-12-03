@@ -31,7 +31,7 @@ regscan(
   covout = FALSE,
   LDpruning = TRUE,
   singleSNPall = FALSE,
-  SKAT_kernel = "linear.weigthed",
+  SKAT_kernel = "linear.weighted",
   SKAT_weights = NULL,
   SKAT_weights_beta = c(1, 25),
   verbose = FALSE,
@@ -82,9 +82,7 @@ regscan(
 
 \item{covout:FALSE}{}
 
-\item{SKAT_kernel:}{type of kernel used for SKAT and SKATO tests. There are 6 types of pre-specified kernels: "linear", "linear.weighted", "IBS", "IBS.weighted", "quadratic" and "2wayIX". See "kernel" argument in SKAT function in for details https://cran.r-project.org/web/packages/SKAT/SKAT.pdf. Default is "linear'kernel".}
-
-\item{SKAT_weights:}{a numeric vector of weights for the weighted kernels. When it is NULL, the beta weight with the “SKAT_weights_beta” parameter is used.}
+\item{SKAT_kernel:}{type of kernel used for SKAT and SKATO tests.}
 
 \item{SKAT_weights_beta:}{a numeric vector of parameters for the beta weights for the weighted kernels. If you want to use your own weights, please use the “weights” parameter. It will be ignored if “weights” parameter is not null.}
 
