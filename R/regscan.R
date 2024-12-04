@@ -51,7 +51,6 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 	SKAT_kernel="linear.weighted", SKAT_weights=NULL, SKAT_weights_beta=c(1,25),
 	verbose=FALSE, debug=FALSE, parallel=FALSE)
 { 
-	print("checking")
 	if(is.null(pheno_type)) { return("Please specify if the phenotype is continuous (pheno_type='C') or dichotomous (pheno_type='D')") }
 	if(is.null(geno_type)) { return("Please specify if the genotypes are in allele dosage format (geno_type='D') or genotype format (geno_type='G')") }
 	if( pheno_type=="C" ) family="gaussian"
@@ -126,7 +125,6 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
    		if(!is.null(SNPinfo_region)) {  
 			processout<- RegionScan:::processing(data=data_region, pheno=pheno, covlist=covlist, 
 				SNPinfo=SNPinfo_region, mafcut=mafcut, multiallelic=multiallelic)
-			save(processout,file="processout.Rdata")
 			nSNPs <-nSNPs.kept <- length(processout$SNPinfo$variant)
 			if(isTRUE(debug)) { save(processout, pheno, covlist, 
 			file=paste("chr", chr,"_", region, "_checking.Rdata", sep="")) } 
@@ -403,12 +401,13 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 		covarout<-as.data.frame(do.call("rbind", rscan[,"covarout"]))
                
   } else {
+		
 	    regionout<-as.data.frame(do.call("rbind", lapply(rscan["regionout"],function(x) { unlist(x)})))
-	    binout<-as.data.frame(do.call("rbind", lapply(rscan["binout"],function(x) { unlist(x)})))
-	    snpout<-as.data.frame(do.call("rbind", lapply(rscan["snpout"],function(x) { unlist(x)})))
-	    filterout<-as.data.frame(do.call("rbind", lapply(rscan["filterout"],function(x) { unlist(x)})))
-		outsingleSNPall<-as.data.frame(do.call("rbind", lapply(rscan["outsingleSNPall"],function(x) { unlist(x)})))
-		covarout<-as.data.frame(do.call("rbind", lapply(rscan["covarout"],function(x) { unlist(x)})))
+	    binout<-as.data.frame(do.call("rbind", rscan["binout"]))
+	    snpout<-as.data.frame(do.call("rbind", rscan["snpout"]))
+	    filterout<-as.data.frame(do.call("rbind", rscan["filterout"]))
+		outsingleSNPall<-as.data.frame(do.call("rbind", rscan["outsingleSNPall"]))
+		covarout<-as.data.frame(do.call("rbind", rscan["covarout"]))
   }
 	regionout$chr<-as.numeric(as.character(regionout$chr))
 	if (isTRUE(parallel)) { parallel::stopCluster(cl = my.cluster) }
