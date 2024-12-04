@@ -6,6 +6,13 @@
 \usage{
 MLCbinsnpPlot(rscanout, chr_, region_)
 }
+\arguments{
+\item{rscanout:}{chromosome number of the locus to plot}
+
+\item{chr_:}{list of contiguous regions to plot}
+
+\item{region_:}{name of the phenotype}
+}
 \description{
 MLCbinsnpPlot : produces a pdf file including the position of the SNPs along the chr per LD bin for the region specified
 }

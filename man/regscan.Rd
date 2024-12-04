@@ -31,6 +31,9 @@ regscan(
   covout = FALSE,
   LDpruning = TRUE,
   singleSNPall = FALSE,
+  SKAT_kernel = "linear.weighted",
+  SKAT_weights = NULL,
+  SKAT_weights_beta = c(1, 25),
   verbose = FALSE,
   debug = FALSE,
   parallel = FALSE
@@ -39,7 +42,7 @@ regscan(
 \arguments{
 \item{phenocov}{a dataframe containing the phenotype(s) and  covariates if applicable}
 
-\item{pheno}{the name of the phenotype column in phenocov to be analyzed}
+\item{pheno}{(required): name of the phenotype column in phenocov to be analyzed; must be included in phenocov input}
 
 \item{REGIONinfo}{dataframe including region definition, with 4 columns: chr”, “region”, “start.bp”, “end.bp”, as provided for example by the output of “BigLD” function from the gpart R package}
 
@@ -47,7 +50,45 @@ regscan(
 
 \item{pheno_type}{(required): pheno_type=“C” if phenotype is continuous, or pheno_type=“D” if dichotomous}
 
-\item{regionlist}{list of characters with region names}
+\item{covlist}{(optional): list of the covariate names to include in the analyses (must be part of phenocov input)}
+
+\item{multiallelic}{(default=FALSE): If FALSE, extract & process only the biallelic SNPs; if TRUE: include multiallelic SNPs in addition of the biallelic SNPs}
+
+\item{regionlist}{(optional): subset or list of the region names to analyze}
+
+\item{covout}{(default=FALSE): specify if covariates estimates should be reported ; will produce an additional output}
+
+\item{SNPinfo:}{dataframe including the SNP information,  must include the following columns: "chr", "pos", "variant", "ref", "alt", “multialSNP”, "multialSNP.rec","freq.alt","multialSNP": binary variable=0, if the SNP is bi-allelic (two alleles), or 1 if more than two alleles"multialSNP.rec": indicates if the multi-allelic SNP has been recoded b recodeVCF (such that baseline allele = major allele), “freq.alt": frequency of the alternate allele (minor allele). This input can be generated using the auxiliary function recodeVCF.}
+
+\item{vcfname:NULL}{}
+
+\item{qcinput:NULL}{}
+
+\item{multial_nmaxalleles:For}{extraction of SNPs with less than multial_nmaxalleles alleles (e.g. 2 to extract biallelic SNPs (default), 3 to extract bi-allelic and triallelic SNPs, etc)}
+
+\item{rcut:parameter}{to prun out the variants within a region (default set to 0.99)}
+
+\item{firthreg:}{(default is FALSE)}
+
+\item{MLCheatmap:TRUE/FALSE}{to produce heatmap of the correlation within region (default is FALSE)}
+
+\item{regionlist:specify}{a list of regions to analyze (optional)}
+
+\item{alltests:by}{default include all the default region-level tests ; to include other region-level tests (set to TRUE)}
+
+\item{edgecut:clustering}{CLQ cut parameter (default is 0.5)}
+
+\item{qcmachr2:}{threshold used to filter out SNPs with low Mach R2 imputation quality score}
+
+\item{covout:FALSE}{}
+
+\item{SKAT_kernel:}{type of kernel used for SKAT and SKATO tests.}
+
+\item{SKAT_weights_beta:}{a numeric vector of parameters for the beta weights for the weighted kernels. If you want to use your own weights, please use the “weights” parameter. It will be ignored if “weights” parameter is not null.}
+
+\item{region_tests:}{specify the list of region-level tests to plot (default is NULL, all tests will be plotted)}
+
+\item{outname:}{name of the output file produced}
 }
 \description{
 regscan : main function for genome-wide region-level analysis
