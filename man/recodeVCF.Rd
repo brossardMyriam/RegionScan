@@ -16,25 +16,6 @@ recodeVCF(
   end = end
 )
 }
-\arguments{
-\item{vcfname}{: name of the vcf file (without extension)}
-
-\item{qcfiler}{: data.frame including imputation quality scores}
-
-\item{multiallelic:}{if TRUE includes multi-allelic variants (default is FALSE)}
-
-\item{multial_nmaxalleles:}{number of maximum alleles per variant kept (default is 2)}
-
-\item{qc_machr2:}{threshold to filter out variants with imputation quality score < qc_machr2}
-
-\item{info_score:}{threshold to filter out variants with imputation quality score < info_score}
-
-\item{chr=chr:}{chromosome # to extract information from vcf file}
-
-\item{start=}{start position to extract information from vcf file}
-
-\item{end=}{end position to extract information from vcf file}
-}
 \description{
 recodeVCF : prepare input file for region-level analysis
 }

@@ -1,10 +1,10 @@
 Package: RegionScan
 Title: A comprehensive package for region-level genome-wide association testing and visualization with integration of alternative region-level multiple-variant and single-variant tests
-Version: 1.0.0
+Version: 0.0.0
 Authors@R: 
     person("Myriam", "Brossard", , "brossard@lunenfeld.ca", role = c("aut", "cre"),
            comment = c(ORCID = "https://orcid.org/0000-0003-4144-3978"))
-Description: RegionScan is designed for scalable genome-wide association testing of both region-level multiple-variant and single-variant statistics, with visualization of the results. For detection of association under heterogeneous regional architectures, it implements three classes of state-of-the-art region-level tests, including multiple-variant linear/logistic regression (with and without dimension reduction), variance-component score tests, and region-level minP tests. RegionScan also supports the analysis of multi-allelic variants and unbalanced binary phenotypes and is compatible with widely used variant call format (VCF) files for both genotyped and imputed variants. Association testing leverages linkage disequilibrium (LD) structure in pre-defined regions, for example, LD-adaptive regions obtained by genomic partitioning, and accommodates parallel processing to improve computational and memory efficiency.  Detailed outputs and utility functions are provided to assist comparison, visualization, and interpretation of results. These versatile features support a wide range of potential applications.
+Description: RegionScan is a R package for comprehensive and scalable region-level genome-wide association testing of alternative region-level multiple-variant and single-variant statistics and visualization of the results. It implements various state-of-the-art region-level tests to improve signal detection under heterogeneous genetic architectures and comparison of multiple-variant region-level and single-variant test results. It leverages LD-based genomic partitioning for LD-adaptive region definition. RegionScan is compatible with VCF input file format, and accommodates parallel region-level processing and analysis to improve computational time and memory efficiency. It also provide options for analysis of multi-allelic variants, unbalanced binary phenotypes, with detailed outputs for results interpretation, and utility functions for visualization, comparison, and interpretation.
 biocViews:
 	karyoploteR
 Depends: 
@@ -23,7 +23,7 @@ Depends:
 License: use_gpl3_license()
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.2.3
 LazyData: true
 Suggests: 
     knitr,

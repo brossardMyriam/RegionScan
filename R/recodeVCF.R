@@ -1,14 +1,14 @@
 #' recodeVCF : prepare input file for region-level analysis
 #'
-#' @param vcfname : name of the vcf file (without extension)
-#' @param multiallelic: if TRUE includes multi-allelic variants (default is FALSE)
-#' @param multial_nmaxalleles: number of maximum alleles per variant kept (default is 2)
-#' @param qc_machr2: threshold to filter out variants with imputation quality score < qc_machr2
-#' @param info_score: threshold to filter out variants with imputation quality score < info_score
-#' @param qcfiler : data.frame including imputation quality scores
-#' @param chr=chr: chromosome # to extract information from vcf file
-#' @param start= start position to extract information from vcf file 
-#' @param end= end position to extract information from vcf file 
+#' @vcfname : name of the vcf file (without extension)
+#' @multiallelic: if TRUE includes multi-allelic variants (default is FALSE)
+#' @multial_nmaxalleles: number of maximum alleles per variant kept (default is 2)
+#' @qc_machr2: threshold to filter out variants with imputation quality score < qc_machr2
+#' @info_score: threshold to filter out variants with imputation quality score < info_score
+#' @qcfiler : data.frame including imputation quality scores
+#' @chr=chr: chromosome # to extract information from vcf file
+#' @start= start position to extract information from vcf file 
+#' @end= end position to extract information from vcf file 
 #' @export
 
 recodeVCF <- function(vcfname, multiallelic, multial_nmaxalleles, qc_machr2, 

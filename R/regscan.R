@@ -4,38 +4,37 @@
 #' @param pheno the name of the phenotype column in phenocov to be analyzed
 #' @param regionlist list of characters with region names
 #' @param REGIONinfo dataframe including region definition, with 4 columns: chr”, “region”, “start.bp”, “end.bp”, as provided for example by the output of “BigLD” function from the gpart R package
+
 #' @param geno_type (required): geno_type=“D” if genotypes are in allele dosage format , or genotype format (geno_type=“G”) ; this argument required for SKAT/SKATO tests
-#' @param pheno (required): name of the phenotype column in phenocov to be analyzed; must be included in phenocov input
+#' @pheno (required): name of the phenotype column in phenocov to be analyzed; must be included in phenocov input
 #' @param pheno_type (required): pheno_type=“C” if phenotype is continuous, or pheno_type=“D” if dichotomous
-#' @param regionlist (optional): subset or list of the region names to analyze
-#' @param covlist (optional): list of the covariate names to include in the analyses (must be part of phenocov input)
-#' @param covout (default=FALSE): specify if covariates estimates should be reported ; will produce an additional output
-#' @param SNPinfo: dataframe including the SNP information,  must include the following columns: "chr", "pos", "variant", "ref", "alt", “multialSNP”, "multialSNP.rec","freq.alt","multialSNP": binary variable=0, if the SNP is bi-allelic (two alleles), or 1 if more than two alleles"multialSNP.rec": indicates if the multi-allelic SNP has been recoded b recodeVCF (such that baseline allele = major allele), “freq.alt": frequency of the alternate allele (minor allele). This input can be generated using the auxiliary function recodeVCF.
-#' @param vcfname:NULL 
-#' @param machr2:NULL
-#' @param qcinput:NULL 
-#' @param info_score:NULL
-#' @param multiallelic (default=FALSE): If FALSE, extract & process only the biallelic SNPs; if TRUE: include multiallelic SNPs in addition of the biallelic SNPs
-#' @param multial_nmaxalleles:For extraction of SNPs with less than multial_nmaxalleles alleles (e.g. 2 to extract biallelic SNPs (default), 3 to extract bi-allelic and triallelic SNPs, etc)
-#' @param mafcut:0.05
-#' @param rcut:parameter to prun out the variants within a region (default set to 0.99)
-#' @param firthreg: (default is FALSE)
-#' @param MLCheatmap:TRUE/FALSE to produce heatmap of the correlation within region (default is FALSE)
-#' @param regionlist:specify a list of regions to analyze (optional)
-#' @param alltests:by default include all the default region-level tests ; to include other region-level tests (set to TRUE)
-#' @param edgecut:clustering CLQ cut parameter (default is 0.5)
-#' @param tol:1e-16
-#' @param qcmachr2: threshold used to filter out SNPs with low Mach R2 imputation quality score
-#' @param covout:FALSE 
-#' @param LDpruning:TRUE
-#' @param singleSNPall:FALSE
-#' @param SKAT_kernel: type of kernel used for SKAT and SKATO tests. 
-#' @param SKAT_weights_beta: a numeric vector of parameters for the beta weights for the weighted kernels. If you want to use your own weights, please use the “weights” parameter. It will be ignored if “weights” parameter is not null. 
-#' @param verbose:FALSE
-#' @param debug:FALSE
-#' @param parallel:FALSE
-#' @param region_tests: specify the list of region-level tests to plot (default is NULL, all tests will be plotted)
-#' @param outname: name of the output file produced 
+#' @regionlist (optional): subset or list of the region names to analyze
+#' @covlist (optional): list of the covariate names to include in the analyses (must be part of phenocov input)
+#' @covout (default=FALSE): specify if covariates estimates should be reported ; will produce an additional output
+#' @SNPinfo:Dataframe including the SNP information,  must include the following columns: "chr", "pos", "variant", "ref", "alt", “multialSNP”, "multialSNP.rec","freq.alt","multialSNP": binary variable=0, if the SNP is bi-allelic (two alleles), or 1 if more than two alleles"multialSNP.rec": indicates if the multi-allelic SNP has been recoded b recodeVCF (such that baseline allele = major allele), “freq.alt": frequency of the alternate allele (minor allele). This input can be generated using the auxiliary function recodeVCF
+#' @vcfname:NULL 
+#' @machr2:NULL
+#' @qcinput:NULL 
+#' @info_score:NULL
+#' @multiallelic (default=FALSE): If FALSE, extract & process only the biallelic SNPs; if TRUE: include multiallelic SNPs in addition of the biallelic SNPs
+#' @multial_nmaxalleles:For extraction of SNPs with less than multial_nmaxalleles alleles (e.g. 2 to extract biallelic SNPs (default), 3 to extract bi-allelic and triallelic SNPs, etc)
+#' @mafcut:0.05
+#' @rcut:parameter to prun out the variants within a region (default set to 0.99)
+#' @firthreg: (default is FALSE)
+#' @MLCheatmap:TRUE/FALSE to produce heatmap of the correlation within region (default is FALSE)
+#' @regionlist:specify a list of regions to analyze (optional)
+#' @alltests:by default include all the default region-level tests ; to include other region-level tests (set to TRUE)
+#' @edgecut:clustering CLQ cut parameter (default is 0.5)
+#' @tol:1e-16
+#' @qcmachr2: threshold used to filter out SNPs with low Mach R2 imputation quality score
+#' @covout:FALSE 
+#' @LDpruning:TRUE
+#' @singleSNPall:FALSE
+#' @verbose:FALSE
+#' @debug:FALSE
+#' @parallel:FALSE
+#' @region_tests: specify the list of region-level tests to plot (default is NULL, all tests will be plotted)
+#' @outname: name of the output file produced 
 #' @export
 #' @return
 #' @export
@@ -47,9 +46,7 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 	covlist=NULL, data=NULL, SNPinfo=NULL, vcfname=NULL, machr2=NULL, qcinput=NULL, info_score=NULL,
 	multiallelic=FALSE, multial_nmaxalleles=2, mafcut=0.05, rcut=0.99, firthreg=FALSE, MLCheatmap=FALSE, 
 	regionlist=NULL, alltests=FALSE, edgecut=0.5, tol=1e-16, qcmachr2=NULL, 
-	covout=FALSE, LDpruning=TRUE, singleSNPall=FALSE, 
-	SKAT_kernel="linear.weighted", SKAT_weights=NULL, SKAT_weights_beta=c(1,25),
-	verbose=FALSE, debug=FALSE, parallel=FALSE)
+	covout=FALSE, LDpruning=TRUE, singleSNPall=FALSE, verbose=FALSE, debug=FALSE, parallel=FALSE)
 { 
 	if(is.null(pheno_type)) { return("Please specify if the phenotype is continuous (pheno_type='C') or dichotomous (pheno_type='D')") }
 	if(is.null(geno_type)) { return("Please specify if the genotypes are in allele dosage format (geno_type='D') or genotype format (geno_type='G')") }
@@ -76,6 +73,7 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 	message(paste("MLCheatmap:",MLCheatmap,sep=""))
 	message(paste("debug:",debug,sep=""))
 	message("*********************************") 
+		
 	#checking inputs
 	if(is.null(vcfname) && is.null(data)) {	message(cat("ERROR: vcfname or data is required")) ; break  } 
 	if(is.null(SNPinfo)) { message(cat("ERROR: SNPinfo is required")) ; break  } 
@@ -85,7 +83,7 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 	if(is.null(pheno_type)) { message(cat("ERROR: pheno_type is required")) ; break  } 
 	if(is.null(geno_type)) { message(cat("ERROR: geno_type is required")) ; break  } 
 	if(!is.null(regionlist)) { REGIONinfo <-subset(REGIONinfo, region%in%regionlist) } 
-   
+ 
   inputs<-lapply(REGIONinfo$region, function(regionc) { 
       tryCatch({      
 			regioncur <-  REGIONinfo[which(REGIONinfo$region==regionc),]
@@ -99,6 +97,7 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 			return(regionc=list(SNPinfo_region=SNPinfo_region, data_region=data_region, regioninfo=regioncur))
      }, error=function(e){cat("ERROR :", conditionMessage(e), "\n")})
   })
+  
   rm(data); rm(REGIONinfo) 
   if (isTRUE(parallel)) {
 	n.cores <- parallel::detectCores() - 1
@@ -128,8 +127,9 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 			nSNPs <-nSNPs.kept <- length(processout$SNPinfo$variant)
 			if(isTRUE(debug)) { save(processout, pheno, covlist, 
 			file=paste("chr", chr,"_", region, "_checking.Rdata", sep="")) } 
-			if(isTRUE(nSNPs>1)) {
-				clustout <- RegionScan:::clustering(data=processout$data[,processout$bialSNP], edgecut=edgecut) #clustering (biallelic SNPs only) 
+			if(nSNPs>1) {
+				clustout <- RegionScan:::clustering(data=processout$data[,processout$bialSNP], 
+				edgecut=edgecut) #clustering (biallelic SNPs only) 
 			if(length(processout$multialSNP.kept)>0) { #multi-allelic
             codechange.bial <- RegionScan:::recoding(binlist=clustout$binlist, data=processout$data) # recoding (for assignation multial SNP)
 		        assignout <- RegionScan:::assigning(binvector=clustout$binvector, codechange=codechange.bial$newcode, multialSNP.kept=processout$multialSNP.kept, data=processout$data, edgecut=edgecut)
@@ -143,11 +143,11 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 					    aliasout <- RegionScan:::aliasing( pheno=pheno, data=processout$data, binvector=assignout)
 				    } 
             
-		    codechange.MLC <- RegionScan:::codechange.bial$newcode[names(codechange.bial$newcode)%in%names(aliasout$final)]
+		        codechange.MLC <- RegionScan:::codechange.bial$newcode[names(codechange.bial$newcode)%in%names(aliasout$final)]
             mual <- setdiff(names(aliasout$final),names(codechange.bial$newcode))
            	binvector.LC <- rep(1,length(codechange.MLC))
-        	names(binvector.LC) <- names(codechange.MLC)
-        	codechange.LC <- RegionScan:::recoding(binlist=list(names(binvector.LC)), data=processout$data)$newcode # recoding (for LC test)
+        		names(binvector.LC) <- names(codechange.MLC)
+        		codechange.LC <- RegionScan:::recoding(binlist=list(names(binvector.LC)), data=processout$data)$newcode # recoding (for LC test)
             
             if(length(mual)>0) {
                 codechange.mual <- rep(0, length(mual))
@@ -161,11 +161,11 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
         } else { # no multi-allelic SNPs 
             if(isTRUE(LDpruning)) {  # optional
 						prunout <- RegionScan:::pruning(binvector=clustout$binvector, data=processout$data, rcut=rcut) 
-					    aliasout <- RegionScan:::aliasing( pheno=pheno, data=processout$data, binvector=prunout$binvector )
+					      aliasout <- RegionScan:::aliasing( pheno=pheno, data=processout$data, binvector=prunout$binvector )
 				    } else {	# no pruning on LD
-					    aliasout <- RegionScan:::aliasing( pheno=pheno, data=processout$data, binvector=clustout$binvector )
+					      aliasout <- RegionScan:::aliasing( pheno=pheno, data=processout$data, binvector=clustout$binvector )
             }
-				binlist.MLC <- lapply(unique(aliasout$final), function(bin) { names(which(aliasout$final==bin)) })
+         binlist.MLC <- lapply(unique(aliasout$final), function(bin) { names(which(aliasout$final==bin)) })
 		        codechange.MLC <- RegionScan:::recoding(binlist.MLC, processout$data)$newcode # recoding (for MLC test)
 	       		binlist.LC <- list(unlist(names(aliasout$final)))
         		binvector.LC <- rep(1,length(unlist(aliasout$final)))
@@ -181,10 +181,10 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 						c(variant=x,sglm.beta=unname(sglmout$beta_g), sglm.se=unname(sglmout$beta_SE), sglm.pvalue=sglmout$p_g) })))
                                                                                             
 				} else {
-			if(length(assignout)>0) { binvectorsg <- assignout 
-			} else { 
-				binvectorsg <- clustout$binvector }
-				sgout <- data.frame(do.call("rbind", lapply(names(binvectorsg), function(x) {  
+          if(length(assignout)>0) { binvectorsg <- assignout 
+          } else { binvectorsg <- clustout$binvector }
+					sgout <- data.frame(do.call("rbind", lapply(names(binvectorsg), 
+            function(x) {  
 						  binvector <- 1 ; names(binvector) <- x
 						  sglmout <- RegionScan:::glmfit(data=processout$data, pheno=pheno, binvector=binvector, covlist=covlist, family=family,tol=tol,firthreg=firthreg)
 						  c(variant=x,sglm.beta=unname(sglmout$beta_g), sglm.se=unname(sglmout$beta_SE), sglm.pvalue=sglmout$p_g)})))
@@ -199,16 +199,12 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 		LCBout <- RegionScan:::MLC(beta=glmout$beta_g, sigmainv=glmout$invcov_g, binvector=binvector.LC,	codechange=codechange.LC, tol=tol)
 		Waldout <- RegionScan:::Wald(glmout$beta_g, glmout$invcov_g)
 		PC80out <-RegionScan:::PC80( data=processout$data, pheno=pheno, covlist=covlist, binvector=aliasout$final, family=family, tol=tol) 
-		SKATout <-RegionScan:::SKATp( data=processout$data, pheno=pheno, covlist=covlist,pheno_type=pheno_type, geno_type=geno_type, binvector=aliasout$final,
-		  SKAT_kernel=SKAT_kernel, SKAT_weights=SKAT_weights, SKAT_weights_beta=SKAT_weights_beta)
-		
+		SKATout <-RegionScan:::SKATp( data=processout$data, pheno=pheno, covlist=covlist, pheno_type=pheno_type, geno_type=geno_type, binvector=aliasout$final)
 		regionout <-c(chr=chr, region=region, start.bp=start, end.bp=end, nSNPs=nSNPs, nSNPs.kept=nSNPs.kept, maxVIF=max(glmout$vif),
-				Wald=Waldout$stat, Wald.df=Waldout$df, Wald.p=Waldout$pvalue, 
-				PC80=PC80out$stat, PC80.df=PC80out$df, PC80.p=PC80out$pvalue,
-				MLCB=MLCBout$stat, MLCB.df=MLCBout$df, MLCB.p=MLCBout$pvalue,
-				LCB=LCBout$stat, LCB.df=LCBout$df, LCB.p=LCBout$pvalue, 
-				SKAT.p=SKATout$SKAT.p, SKATO.p=SKATout$SKATO.p)
-	    
+  			Wald=Waldout$stat, Wald.df=Waldout$df, Wald.p=Waldout$pvalue, MLCB=MLCBout$stat, MLCB.df=MLCBout$df, MLCB.p=MLCBout$pvalue,
+  			LCB=LCBout$stat, LCB.df=LCBout$df, LCB.p=LCBout$pvalue, PC80=PC80out$stat, PC80.df=PC80out$df, PC80.p=PC80out$pvalue,
+  			SKAT.p=SKATout$SKAT.p, SKATO.p=SKATout$SKATO.p)
+    
     if( isTRUE(nSNPs.kept>1)) {	
   		sgsel<-subset(sgout,variant%in%names(aliasout$final))
   		corsel<-cor(processout$data[,sgsel$variant,drop=F])
@@ -218,12 +214,11 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
   		out_simpleM <- RegionScan:::simpleM_v2(pval, corsel) 
   		out_gates <- RegionScan:::gates_v2(pval, corsel)
   		minp_uncorected<-min(pval)
-			regionout <- c(regionout,	simes.p=out_simes$p, simpleM.df=out_simpleM$simpleM.df, 
-  			simpleM.p=out_simpleM$simpleM.p, GATES.p=out_gates, single_Wald.p=minp_uncorected)
+  	  		regionout <- c(regionout,	simes.p=out_simes, simpleM.df=out_simpleM$simpleM.df, 
+  			simpleM.p=out_simpleM$simpleM.p, GATES.p=out_gates, uMinP.p=minp_uncorected)
      } else {
-		regionout$maxVIF<-NA
      	regionout <- c(regionout,	simes.p=glmout$p_g , simpleM.df=1 , 
-				simpleM.p=glmout$p_g ,GATES.p=glmout$p_g, single_Wald.p=glmout$p_g)
+				simpleM.p=glmout$p_g ,GATES.p=glmout$p_g, uMinP.p=glmout$p_g)
      }   
 
    	 if ( length(assignout)>0 ) { 
@@ -262,23 +257,23 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 		
     	# removed list
 			allremoved<-filterout<-NULL
-			if(length(processout$removed.mafcut)>0) { allremoved<-data.frame(cbind(variant=processout$removed.mafcut, bin="NA", reason="mafcut")) }
+			if(length(processout$removed.mafcut)>0) { allremoved<-data.frame(cbind(variant=processout$removed.mafcut, bin=NA, reason="mafcut")) }
 			if(length(processout$removed.multiallelic)>0) { allremoved<-data.frame(rbind(allremoved, 
-				cbind(variant=processout$removed.multiallelic, bin="NA", reason="multial"))) }
+        cbind(variant=processout$removed.multiallelic, bin=NA, reason="multial"))) }
 			if(length(names(prunout$removed))>0) { allremoved<-data.frame(rbind(allremoved, 
-				cbind(variant=names(prunout$removed),bin=prunout$removed, reason="rcut"))) }
+          cbind(variant=names(prunout$removed),bin=prunout$removed, reason="rcut"))) }
 			if(length(names(aliasout$aliasout))>0) { allremoved<-data.frame(rbind(allremoved,	
-				cbind( variant=names(aliasout$aliasout),bin=aliasout$aliasout, reason="alias"))) }
+          cbind( variant=names(aliasout$aliasout),bin=aliasout$aliasout, reason="alias"))) }
 			if(!is.null(allremoved)) { 
-				  bp <- SNPinfo_region[match(allremoved$variant,SNPinfo_region$variant),]$bp
-				  names(bp) <- SNPinfo_region[match(allremoved$variant,SNPinfo_region$variant),]$variant
-				  filterout <- cbind(chr=chr, region=region, start=start, end=end, bp=bp, allremoved)
-			}
+          bp <- SNPinfo_region[match(allremoved$variant,SNPinfo_region$variant),]$bp
+          names(bp) <- SNPinfo_region[match(allremoved$variant,SNPinfo_region$variant),]$variant
+          filterout <- cbind(chr=chr, region=region, start=start, end=end, bp=bp, allremoved)
+       }
 		
-			if(!is.null(filterout) && nrow(filterout)>1) { filterout<-filterout[order(filterout$bin,filterout$bp),] }
-			if(nrow(binout)>1) { binout<-binout[order(binout$bin),] }
-			if(nrow(snpout)>1) { snpout<-snpout[order(snpout$bin,snpout$bp),] } 
-			if(!is.null(outsingleSNPall)) { outsingleSNPall<-outsingleSNPall[order(outsingleSNPall$bin,outsingleSNPall$bp),] } 
+      if(!is.null(filterout) && nrow(filterout)>1) { filterout<-filterout[order(filterout$bin,filterout$bp),] }
+      if(nrow(binout)>1) { binout<-binout[order(binout$bin),] }
+      if(nrow(snpout)>1) { snpout<-snpout[order(snpout$bin,snpout$bp),] } 
+      if(!is.null(outsingleSNPall)) { outsingleSNPall<-outsingleSNPall[order(outsingleSNPall$bin,outsingleSNPall$bp),] } 
     
       
      if (isTRUE(MLCheatmap)) {
@@ -306,7 +301,6 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
         RegionScan:::RegionHeatmap(cormat1, type_mat="Correlation,\n" , 
           ptitle="Within region correlation (before pruning & recoding),\n SNPs ordered by pos", 
             colvect=colvect, clustorder=F)
-			
         ggplot2::ggsave(paste(outfile,"_before_pruning_and_recoding_ordered_by_pos.pdf",sep=""))
         RegionScan:::RegionHeatmap(cormat1[names(binvector),names(binvector)],
           binvector=binvector, type_mat="Correlation", 
@@ -345,38 +339,37 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 			PC80out<- Waldout<- LCBout <- MLCBout
 			SKATout<-RegionScan:::SKATp( data=processout$data, pheno=pheno, 
 				covlist=covlist, pheno_type=pheno_type,
-				geno_type=geno_type,binvector=binvector,SKAT_kernel=SKAT_kernel, 						
-				SKAT_weights=SKAT_weights, SKAT_weights_beta=SKAT_weights_beta)
+				geno_type=geno_type,binvector=binvector)
 			
 			sgout<-	c(variant=processout$SNPinfo[,"variant"],
-				sglm.beta=unname(glmout$beta_g),
-						sglm.se=unname(glmout$beta_SE), 
-						sglm.pvalue=glmout$p_g)
+        sglm.beta=unname(glmout$beta_g),
+				sglm.se=unname(glmout$beta_SE), 
+				sglm.pvalue=glmout$p_g)
 				
 			binout <- cbind(chr=chr, region=region, start.bp=start, end.bp=end, 
-				binstart.bfP.bp=processout$SNPinfo[,"pos"], binend.bfP.bp=processout$SNPinfo[,"pos"],
-				binstart.afP.bp=processout$SNPinfo[,"pos"], binend.afP.bp=processout$SNPinfo[,"pos"], 
-				binsize.bfP=1, binsize.afP=1, MLCBout$deltabin)
+        binstart.bfP.bp=processout$SNPinfo[,"pos"], binend.bfP.bp=processout$SNPinfo[,"pos"],
+        binstart.afP.bp=processout$SNPinfo[,"pos"], binend.afP.bp=processout$SNPinfo[,"pos"], 
+        binsize.bfP=1, binsize.afP=1, MLCBout$deltabin)
    
 			snpout<-cbind(chr=chr, region=region, start.bp=start, end.bp=end, 
 				bin=1, processout$SNPinfo[,c("bp","multiallelic","ref","alt","maf")],
 				MLC.codechange=0, LC.codechange=0,sgout, 
-				mglm.vif="NA", mglm.beta=glmout$beta_g, 
+				mglm.vif=NA, mglm.beta=glmout$beta_g, 
 				mglm.se=glmout$beta_SE, mglm.pvalue=glmout$p_g )
 				
 			regionout<-c(chr=chr, region=region, start.bp=start, end.bp=end, 
-				nSNPs=nSNPs, nSNPs.kept=nSNPs.kept, maxVIF="NA",
+				nSNPs=nSNPs, nSNPs.kept=nSNPs.kept, maxVIF=NA,
 				Wald=Waldout$stat,Wald.df=Waldout$df, Wald.p=Waldout$pvalue,   
-				PC80=PC80out$stat, PC80.df=PC80out$df,PC80.p=PC80out$pvalue,
 				MLCB=MLCBout$stat,MLCB.df=MLCBout$df,MLCB.p=MLCBout$pvalue,
 				LCB=LCBout$stat,LCB.df=LCBout$df,LCB.p=LCBout$pvalue,
+				PC80=PC80out$stat, PC80.df=PC80out$df,PC80.p=PC80out$pvalue,
 				SKAT.p=SKATout$SKAT.p,SKATO.p=SKATout$SKATO.p,
 				simes.p=glmout$p_g , simpleM.df=1 , 
-				simpleM.p=glmout$p_g ,GATES.p=glmout$p_g, single_Wald.p=glmout$p_g)
+				simpleM.p=glmout$p_g ,GATES.p=glmout$p_g, uMinP.p=glmout$p_g)
         
 		if(isTRUE(alltests)) {
 			MLCZout <- LCZout <- RegionScan:::MLC(Z=glmout$Z_g, invcor=glmout$invcor_g,  binvector=binvector, codechange=0, tol=tol)
-			regionout <- c(regionout,MLCZ=MLCZout$stat, MLCZ.df=MLCZout$df, MLCZ.p=MLCZout$pvalue,LCZ=LCZout$stat,LCZ.df=LCZout$df,LCZ.p=LCZout$pvalue)	
+			regionout <- c(regionout,	MLCZ=MLCZout$stat, MLCZ.df=MLCZout$df, MLCZ.p=MLCZout$pvalue,	LCZ=LCZout$stat,LCZ.df=LCZout$df,LCZ.p=LCZout$pvalue)	
 			binout<- c(binout,MLCZout$deltabin)
  		}		 
 	} # ENF IF (regions with 1 SNP)
@@ -391,29 +384,24 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
    outsingleSNPall=outsingleSNPall, covarout=covoutput))
   }  
   #print(rscan)
-
   if(length(rscan)>6) {
-	    regionout<-as.data.frame(do.call("rbind", lapply(rscan[,"regionout"],function(x) { unlist(x)})))
-	    binout<-as.data.frame(do.call("rbind", rscan[,"binout"]))
-	    snpout<-as.data.frame(do.call("rbind", rscan[,"snpout"]))
-	    filterout<-as.data.frame(do.call("rbind", rscan[,"filterout"]))
-		outsingleSNPall<-as.data.frame(do.call("rbind",rscan[,"outsingleSNPall"]))
-		covarout<-as.data.frame(do.call("rbind", rscan[,"covarout"]))
+	    regionout<-as.data.frame(do.call("rbind", rscan[,"regionout"]),row.names=NULL)
+	    binout<-as.data.frame(do.call("rbind", rscan[,"binout"]),row.names=NULL)
+	    snpout<-as.data.frame(do.call("rbind", rscan[,"snpout"]),row.names=NULL)
+	    filterout<-as.data.frame(do.call("rbind", rscan[,"filterout"]),row.names=NULL)
+		outsingleSNPall<-as.data.frame(do.call("rbind", rscan[,"outsingleSNPall"]),row.names=NULL)
+		covarout<-as.data.frame(do.call("rbind", rscan[,"covarout"]),row.names=NULL)
                
   } else {
-		
-	    regionout<-as.data.frame(do.call("rbind", lapply(rscan["regionout"],function(x) { unlist(x)})))
-	    binout<-as.data.frame(do.call("rbind", rscan["binout"]))
-	    snpout<-as.data.frame(do.call("rbind", rscan["snpout"]))
-	    filterout<-as.data.frame(do.call("rbind", rscan["filterout"]))
-		outsingleSNPall<-as.data.frame(do.call("rbind", rscan["outsingleSNPall"]))
-		covarout<-as.data.frame(do.call("rbind", rscan["covarout"]))
+		regionout<-as.data.frame(do.call("rbind", rscan["regionout"]),row.names=NULL)
+	    binout<-as.data.frame(do.call("rbind", rscan["binout"]),row.names=NULL)
+	    snpout<-as.data.frame(do.call("rbind", rscan["snpout"]),row.names=NULL)
+	    filterout<-as.data.frame(do.call("rbind", rscan["filterout"]),row.names=NULL)
+		outsingleSNPall<-as.data.frame(do.call("rbind", rscan["outsingleSNPall"]),row.names=NULL)
+		covarout<-as.data.frame(do.call("rbind", rscan["covarout"]),row.names=NULL)
   }
 	regionout$chr<-as.numeric(as.character(regionout$chr))
 	if (isTRUE(parallel)) { parallel::stopCluster(cl = my.cluster) }
-	
-	rownames(regionout)<-rownames(binout)<-rownames(snpout)<-rownames(filterout)<-rownames(outsingleSNPall)<-rownames(covarout)<-NULL
-	
 	return( list(regionout=regionout, binout=binout, snpout=snpout, 
     filterout=filterout, outsingleSNPall=outsingleSNPall, covout=covarout) )
 } 

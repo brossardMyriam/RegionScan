@@ -6,13 +6,6 @@
 \usage{
 qqregscanPlot(regionout, outname, test_name)
 }
-\arguments{
-\item{regionout:}{output from regscan}
-
-\item{outname:}{name of the output file}
-
-\item{test_name:}{name of the test to be plotted}
-}
 \description{
 qqregscanPlot : qq plot for a specified test
 }

@@ -1,0 +1,137 @@
+---
+title: "Get started with `RegionScan`"
+output: rmarkdown::html_vignette
+vignette: >
+  %/VignetteIndexEntry{Introduction}
+  %/VignetteEngine{knitr::rmarkdown}
+  %/VignetteEncoding{UTF-8}
+---
+
+`RegionScan` is a R package for comprehensive and scalable region-level genome-wide association testing of alternative region-level multiple-variant and single-variant statistics and visualization of the results. It implements various state-of-the-art region-level tests to improve signal detection under heterogeneous genetic architectures and comparison of multiple-variant region-level and single-variant test results. It leverages LD-based genomic partitioning for LD-adaptive region definition. `RegionScan` is compatible with VCF input file format, and accommodates parallel region-level processing and analysis to improve computational time and memory efficiency. It also provide options for analysis of multi-allelic variants, unbalanced binary phenotypes, with detailed outputs for results interpretation, and utility functions for visualization, comparison, and interpretation.
+
+In this vignette, we illustrate basic usage of `RegionScan` functions applied to a example dataset provided with the package.
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+```{r setup, message=FALSE, warning=FALSE}
+#######library(devtools)
+#######install_github("brossardMyriam/RegionScan")
+library(RegionScan)
+```
+
+## Basic usage of `regscan`
+
+### Example dataset
+This example dataset is based on 436 biallelic SNPs (MAF>0.05) genotyped in chr16:46382489-47684754 in 40,000 individuals simulated from high coverage whole genome sequenced 1000G European ancestry haplotypes using HAPGEN2 softawre. For this illustration, we simulated a quantitative trait ("sim_QT" in the `phenocov` input)  and a binary trait (sim_QT dichotmomized) ; sim_QT was generated under a linear regression model, assuming effect of one causal SNP randomly chosen in the middle of the locus; while "sim_bin" corresponds to sim_QT dichotomized (see script data_simulation.R for details). 
+
+In this vignette, we assess how to run the main function for region-level and single-SNP analysis with RegionScan and results visualizations. For this illustration, we run `regscan` for 20 consecutive regions for association analysis with sim_QT and visualize the results. In this simple illustration, We assume that the dosage data have been processed and specified as input (alternatively when these data are not available, processing ...)
+
+### Main inputs
+Three main inputs required by regscan
+
+###### Input 1: REGIONinfo 
+This dataframe must include at least `chr`, `start.bp`, `end.bp`, `region`; this file can be produced using the R package 'gpart', or any type of user-specified regions. 
+
+```{r,, warning=FALSE}
+head(REGIONinfo)
+```
+
+###### Input 2: geno
+This dataframe must include individualID as well as the genotypes (columns) of the individuals (rows) ; as illustrated below for 5 genetic variants
+```{r,, warning=FALSE}
+head(geno[,1:6])
+```
+
+###### Input 3: SNPinfo
+This dataframe includes the variant positions and information for the variants in `geno` input ; all the following columns are required
+```{r,, warning=FALSE}
+head(SNPinfo)
+```
+
+###### Input 4: phenocov
+This dataframe must includes individualID, the phenotypes and covariates (this file will be merged with the genofile)
+```{r,, warning=FALSE}
+head(phenocov)
+```
+
+### Single & Region-level analysis 
+
+```{r, , warning=FALSE, message=FALSE, results = 'hide'}
+results<-RegionScan::regscan(phenocov = phenocov, pheno="sim_QT",  REGIONinfo=REGIONinfo, geno_type="D", pheno_type="C", data = geno,  SNPinfo = SNPinfo )
+```
+
+### Main Outputs
+The main output of `regscan` function is a list including the region-level, Bin-level, variant-level outputs and filtered variant lists; optionally  sinleSNPall output with single-SNP results for all variants analyzed (including filtered variants in region-level analysis) is provided.
+
+##### Output 1: Region-level results
+This is the main output which includes results from all the region-level test implemented in RegionScan for all regions from REGIONinfo.
+```{r, , warning=FALSE}
+head(results$regionout)
+```
+
+##### Output 2: Bin-level results
+This output includes the bin-level association results (deltaB, deltaB.se, deltaB.pvalue) for each LD bin identified in the regions for the MLC test. It also includes the bin sizes (ie. number of SNPs in each LD bin before and after LD-based pruning. The bin-level results can help to investigate some MLC region-level test results.
+```{r, , warning=FALSE}
+head(results$binout)
+```
+
+##### Output 3: variant-level results
+This output provides detailed results at the variant-level for all variants kept for the region-level analysis. The variant-specific results from multiple regression at the region level and single-SNP regression models are reported. Investigation of this output can help to investigate the region-level results (particularly for the MLC region-level test).
+
+```{r, , warning=FALSE}
+head(results$snpout)
+```
+
+##### Output 4: variants excluded
+This output lists all the variants excluded within each region and the reasons of exclusion (MAF, LD pruning etc); the LD bin information is also reported.
+
+```{r, , warning=FALSE}
+head(results$filterout)
+```
+
+## Visualisation of the results
+
+#### Locus plot 
+This function provides an overview of region-level tests result for a list of consecutive regions specified (using the argument regionlist).
+```{r, , warning=FALSE, message=FALSE}
+results$regionout$chr<-as.numeric(as.character(results$regionout$chr))
+LocusPlot(chr=16,pheno="sim_QT",regscanout=results,regionlist=c(1:10))
+```
+
+```{r pressure, echo=FALSE, fig.cap="A caption", out.width = '100%'}
+knitr::include_graphics("C:/Users/bross/OneDrive/Haplotypes_CLQD_MLC/RegionScan_paper/RegionScan_dev/example/LocusPlot_region1_to_20.pdf")
+```
+
+#### LD heatmaps
+The following functions produces LD heatmps for a specified region (here region "8" that includes the causal variant, or list of regions) to visualize the correlation structure within region, before and after pruning, as well as the dependencies between LD bins.
+```{r, , warning=FALSE, message=FALSE, results = 'hide'}
+regscan(phenocov = phenocov, pheno="sim_QT",  REGIONinfo=REGIONinfo,
+        geno_type="D", pheno_type="C", data = geno,  SNPinfo = SNPinfo,
+        MLCheatmap = TRUE, regionlist ="8" )
+```
+
+```{r pressure3, echo=FALSE, fig.cap="Example 1 of LD heatmap plot for region 8 (after LD pruning), ordered by variant positions", out.width = '100%'}
+knitr::include_graphics("C:/Users/bross/OneDrive/Haplotypes_CLQD_MLC/RegionScan_paper/RegionScan_dev/example/MLC_heatmap_chr16.region8_after_pruning_and_after_recoding_ordered_by_pos.pdf")
+```
+
+```{r pressure4, echo=FALSE, fig.cap="Example 2 of LD heatmap plot for region 8 (after LD pruning), ordered by LD bins", out.width = '100%'}
+knitr::include_graphics("C:/Users/bross/OneDrive/Haplotypes_CLQD_MLC/RegionScan_paper/RegionScan_dev/example/MLC_heatmap_chr16.region8_after_pruning_and_after_recoding_ordered_by_LDbin.pdf")
+```
+
+#### SNP LD bin positions
+The following allows to visualize the variant positions (X axis) along the LD bins (Y axis) for the variants kept LD pruning (and removed by LD pruning, in grey). 
+
+```{r, , warning=FALSE, message=FALSE, results = 'hide'}
+MLCbinsnpPlot(rscanout = results, chr_=16, region_ =8 )
+```
+
+```{r pressure2, echo=FALSE, fig.cap="variant positions (X axis) along LD bins in region 8", out.width = '100%'}
+knitr::include_graphics("C:/Users/bross/OneDrive/Haplotypes_CLQD_MLC/RegionScan_paper/RegionScan_dev/example/MLC_LDbin_SNPpos_chr16_region8_before_and_after_pruning.pdf")
+```
