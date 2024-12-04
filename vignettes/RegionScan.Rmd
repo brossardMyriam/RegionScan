@@ -1,0 +1,6 @@
+\documentclass{article}
+\usepackage{pdfpages}
+%\VignetteIndexEntry{author2019RegionScan}
+\begin{document}
+\includepdf[pages=-, fitpaper=true]{RegionScan.pdf}
+\end{document}
