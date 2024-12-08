@@ -21,7 +21,9 @@ Depends:
     karyoploteR,
     R (>= 2.10)
 Suggests: R.rsp
-VignetteBuilder: R.rsp
+VignetteBuilder: 
+    knitr,
+    R.rsp
 License: use_gpl3_license()
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
