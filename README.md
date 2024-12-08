@@ -13,7 +13,7 @@ install automatically from this repository:
 
 ```{r, eval=TRUE}
 library(devtools)
-install_github("brossardMyriam/RegionScan")
+install_github("brossardMyriam/RegionScan",build_vignettes = TRUE))
 ```
 
 ## Usage
