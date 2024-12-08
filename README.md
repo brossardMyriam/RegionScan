@@ -17,7 +17,7 @@ install_github("brossardMyriam/RegionScan")
 ```
 
 ## Usage
-See the [tutorial](https://github.com/brossardMyriam/RegionScan/blob/main/Introduction.pdf) for an illustration on how to use `RegionScan` on the realistic example dataset provided with the package.
+See the [tutorial](https://github.com/brossardMyriam/RegionScan/blob/main/vignettes/RegionScan.pdf) for an illustration on how to use `RegionScan` on the realistic example dataset provided with the package.
 
 ## Overview of `RegionScan` capabilities
 Overview of RegionScan for genome-wide region-level association analysis on chr19 (to facilitate visualization) in a Usage case study (see details in our [preprint](https://www.biorxiv.org/content/10.1101/2024.03.04.582374v1)). 
