@@ -354,8 +354,8 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 						sglm.pvalue=glmout$p_g)
 				
 			binout <- cbind(chr=chr, region=region, start.bp=start, end.bp=end, 
-				binstart.bfP.bp=processout$SNPinfo[,"pos"], binend.bfP.bp=processout$SNPinfo[,"pos"],
-				binstart.afP.bp=processout$SNPinfo[,"pos"], binend.afP.bp=processout$SNPinfo[,"pos"], 
+				binstart.bfP.bp=processout$SNPinfo["bp"], binend.bfP.bp=processout$SNPinfo["bp"],
+				binstart.afP.bp=processout$SNPinfo["bp"], binend.afP.bp=processout$SNPinfo["bp"], 
 				binsize.bfP=1, binsize.afP=1, MLCBout$deltabin)
    
 			snpout<-cbind(chr=chr, region=region, start.bp=start, end.bp=end, 
