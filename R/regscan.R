@@ -353,12 +353,12 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 						sglm.se=unname(glmout$beta_SE), 
 						sglm.pvalue=glmout$p_g)
 				
-			binout <- cbind(chr=chr, region=region, start.bp=start, end.bp=end, 
-				binstart.bfP.bp=processout$SNPinfo["bp"], binend.bfP.bp=processout$SNPinfo["bp"],
-				binstart.afP.bp=processout$SNPinfo["bp"], binend.afP.bp=processout$SNPinfo["bp"], 
+			binout <- c(chr=chr, region=region, start.bp=start, end.bp=end, 
+				binstart.bfP.bp=unique(processout$SNPinfo["bp"]), binend.bfP.bp=unique(processout$SNPinfo["bp"]),
+				binstart.afP.bp=unique(processout$SNPinfo["bp"]), binend.afP.bp=unique(processout$SNPinfo["bp"]), 
 				binsize.bfP=1, binsize.afP=1, MLCBout$deltabin)
    
-			snpout<-cbind(chr=chr, region=region, start.bp=start, end.bp=end, 
+			snpout<-c(chr=chr, region=region, start.bp=start, end.bp=end, 
 				bin=1, processout$SNPinfo[,c("bp","multiallelic","ref","alt","maf")],
 				MLC.codechange=0, LC.codechange=0,sgout, 
 				mglm.vif="NA", mglm.beta=glmout$beta_g, 
