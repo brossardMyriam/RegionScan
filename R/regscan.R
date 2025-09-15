@@ -360,7 +360,7 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
    
 			snpout<-data.frame(chr=chr, region=region, start.bp=start, end.bp=end, 
 				bin=1, processout$SNPinfo[,c("bp","multiallelic","ref","alt","maf")],
-				MLC.codechange=0, LC.codechange=0,as.character(sgout), 
+				MLC.codechange=0, LC.codechange=0, sgout, 
 				mglm.vif="NA", mglm.beta=unname(unlist(glmout$beta_g)), 
 				mglm.se=glmout$beta_SE, mglm.pvalue=glmout$p_g )
 				
