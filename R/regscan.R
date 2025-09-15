@@ -143,7 +143,7 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 					    aliasout <- RegionScan:::aliasing( pheno=pheno, data=processout$data, binvector=assignout)
 				    } 
             
-		    codechange.MLC <- RegionScan:::codechange.bial$newcode[names(codechange.bial$newcode)%in%names(aliasout$final)]
+		    codechange.MLC <- codechange.bial$newcode[names(codechange.bial$newcode)%in%names(aliasout$final)]
             mual <- setdiff(names(aliasout$final),names(codechange.bial$newcode))
            	binvector.LC <- rep(1,length(codechange.MLC))
         	names(binvector.LC) <- names(codechange.MLC)
@@ -202,7 +202,7 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 		SKATout <-RegionScan:::SKATp( data=processout$data, pheno=pheno, covlist=covlist,pheno_type=pheno_type, geno_type=geno_type, binvector=aliasout$final,
 		  SKAT_kernel=SKAT_kernel, SKAT_weights=SKAT_weights, SKAT_weights_beta=SKAT_weights_beta)
 		
-		regionout <-c(chr=chr, region=region, start.bp=start, end.bp=end, nSNPs=nSNPs, nSNPs.kept=nSNPs.kept, maxVIF=max(glmout$vif),
+		regionout <-data.frame(chr=chr, region=region, start.bp=start, end.bp=end, nSNPs=nSNPs, nSNPs.kept=nSNPs.kept, maxVIF=max(glmout$vif),
 				Wald=Waldout$stat, Wald.df=Waldout$df, Wald.p=Waldout$pvalue, 
 				PC80=PC80out$stat, PC80.df=PC80out$df, PC80.p=PC80out$pvalue,
 				MLCB=MLCBout$stat, MLCB.df=MLCBout$df, MLCB.p=MLCBout$pvalue,
@@ -239,9 +239,9 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
      binsize.bfP<-unlist(lapply(bin.bfP, length))
      binsize.afP<-unlist(lapply(bin.afP, length))
      binout <- data.frame(cbind(chr=chr, region=region, start.bp=start, end.bp=end, 
-     binstart.bfP.bp=binstart.bfP.bp, binend.bfP.bp=binend.bfP.bp,
-     binstart.afP.bp=binstart.afP.bp, binend.afP.bp=binend.afP.bp,
-       binsize.bfP=binsize.bfP, binsize.afP=binsize.afP, as.character(MLCBout$deltabin)))
+     binstart.bfP.bp=binstart.bfP.bp, binend.bfP.bp=unname(binend.bfP.bp),
+     binstart.afP.bp=binstart.afP.bp, binend.afP.bp=unname(binend.afP.bp),
+       binsize.bfP=unname(binsize.bfP), binsize.afP=unname(binsize.afP), MLCBout$deltabin))
 	 if(isTRUE(alltests)) {
 			MLCZout <- RegionScan:::MLC(Z=glmout$Z_g, invcor=glmout$invcor_g,  
 					binvector=aliasout$final, codechange=codechange.MLC, tol=tol)
@@ -251,14 +251,14 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 				LCZ=LCZout$stat,LCZ.df=LCZout$df,LCZ.p=LCZout$pvalue)
 			binout <- c(binout,MLCZout$deltabin)
 		}
-		snpout<-data.frame(cbind( chr=chr, region=region, start.bp=start, end.bp=end, 
+		snpout<-data.frame( chr=chr, region=region, start.bp=start, end.bp=end, 
 				bin=aliasout$final, processout$SNPinfo[match(names(aliasout$final),
 				processout$SNPinfo$variant),c("bp","multiallelic","ref","alt","maf")],
 				MLC.codechange=codechange.MLC[names(glmout$beta_g)], 
 				LC.codechange=codechange.LC[names(glmout$beta_g)],
         		subset(sgout,variant%in%names(aliasout$final)), 
 				mglm.vif=glmout$vif, mglm.beta=glmout$beta_g, 
-				mglm.se=glmout$beta_SE, mglm.pvalue=glmout$p_g ))
+				mglm.se=glmout$beta_SE, mglm.pvalue=glmout$p_g )
 		
     	# removed list
 			allremoved<-filterout<-NULL
@@ -348,23 +348,23 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 				geno_type=geno_type,binvector=binvector,SKAT_kernel=SKAT_kernel, 						
 				SKAT_weights=SKAT_weights, SKAT_weights_beta=SKAT_weights_beta)
 			
-			sgout<-	c(variant=processout$SNPinfo[,"variant"],
+			sgout<-	data.frame(variant=processout$SNPinfo[,"variant"],
 				sglm.beta=unname(glmout$beta_g),
 						sglm.se=unname(glmout$beta_SE), 
 						sglm.pvalue=unname(glmout$p_g))
 				
-			binout <- c(chr=chr, region=region, start.bp=start, end.bp=end, 
-				binstart.bfP.bp=unique(processout$SNPinfo["bp"]), binend.bfP.bp=unique(processout$SNPinfo["bp"]),
-				binstart.afP.bp=unique(processout$SNPinfo["bp"]), binend.afP.bp=unique(processout$SNPinfo["bp"]), 
-				binsize.bfP=1, binsize.afP=1, as.character(MLCBout$deltabin))
+			binout <- data.frame(cbind(chr=chr, region=region, start.bp=start, end.bp=end, 
+				binstart.bfP.bp=unname(unique(processout$SNPinfo["bp"])), binend.bfP.bp=unname(unique(processout$SNPinfo["bp"])),
+				binstart.afP.bp=unname(unique(processout$SNPinfo["bp"])), binend.afP.bp=unname(unique(processout$SNPinfo["bp"])), 
+				binsize.bfP=1, binsize.afP=1, unique(MLCBout$deltabin)))
    
-			snpout<-c(chr=chr, region=region, start.bp=start, end.bp=end, 
+			snpout<-data.frame(chr=chr, region=region, start.bp=start, end.bp=end, 
 				bin=1, processout$SNPinfo[,c("bp","multiallelic","ref","alt","maf")],
 				MLC.codechange=0, LC.codechange=0,as.character(sgout), 
-				mglm.vif="NA", mglm.beta=unname(glmout$beta_g), 
-				mglm.se=unname(glmout$beta_SE), mglm.pvalue=unname(glmout$p_g ))
+				mglm.vif="NA", mglm.beta=unname(unlist(glmout$beta_g)), 
+				mglm.se=glmout$beta_SE, mglm.pvalue=glmout$p_g )
 				
-			regionout<-c(chr=chr, region=region, start.bp=start, end.bp=end, 
+			regionout<-data.frame(chr=chr, region=region, start.bp=start, end.bp=end, 
 				nSNPs=nSNPs, nSNPs.kept=nSNPs.kept, maxVIF="NA",
 				Wald=Waldout$stat,Wald.df=Waldout$df, Wald.p=Waldout$pvalue,   
 				PC80=PC80out$stat, PC80.df=PC80out$df,PC80.p=PC80out$pvalue,
