@@ -351,7 +351,7 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 			sgout<-	c(variant=processout$SNPinfo[,"variant"],
 				sglm.beta=unname(glmout$beta_g),
 						sglm.se=unname(glmout$beta_SE), 
-						sglm.pvalue=uname(glmout$p_g))
+						sglm.pvalue=unname(glmout$p_g))
 				
 			binout <- c(chr=chr, region=region, start.bp=start, end.bp=end, 
 				binstart.bfP.bp=unique(processout$SNPinfo["bp"]), binend.bfP.bp=unique(processout$SNPinfo["bp"]),
