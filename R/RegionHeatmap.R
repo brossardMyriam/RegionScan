@@ -95,8 +95,8 @@ RegionHeatmap <- function(inputmat, binvector=NULL, type_mat=type_mat,
 		hggplot2 <- hggplot  +
 		ggplot2::geom_text(aes(Var2, Var1, label = value), 
 		color = c("black"), size = size.txt) +
-		ggplot2::geom_segment(data=seg, aes(x=x+0.5,xend=xend+0.5, 
-		y=y+0.5,yend=yend+0.5), size=1, inherit.aes=F)	
+		ggplot2::geom_segment(data=seg, aes(x=as.numeric(x)+0.5,xend=as.numeric(xend)+0.5, 
+		y=as.numeric(y)+0.5,yend=as.numeric(yend)+0.5), size=1, inherit.aes=F)	
 		
 		seg2 <- horiz
 		seg2$yend <- seg2$y <- 0
@@ -107,12 +107,12 @@ RegionHeatmap <- function(inputmat, binvector=NULL, type_mat=type_mat,
 		seg3$yend <- seg2$xend			
 		
 		names(colvect) <- colvect
-		hggplot3 <- hggplot2 + ggplot2::geom_segment(data=seg2, aes(x=x+1,xend=xend+1, 
-		  y=y-5,yend=yend-5 ,color=names(colvect)) , 
+		hggplot3 <- hggplot2 + ggplot2::geom_segment(data=seg2, aes(x=as.numeric(x)+1,xend=as.numeric(xend)+1, 
+		  y=as.numeric(y)-5,yend=as.numeric(yend)-5 ,color=names(colvect)) , 
       size=10, inherit.aes=F,show.legend=F)	+ 
 		ggplot2::scale_color_manual(values=colvect)	+
-		ggplot2::geom_segment(data=seg3, aes(x=x-5,xend=xend-5, 
-      y=y,yend=yend,color=names(colvect)) , 
+		ggplot2::geom_segment(data=seg3, aes(x=x-5,xend=as.numeric(xend)-5, 
+      y=as.numeric(y),yend=as.numeric(yend),color=names(colvect)) , 
       size=10, inherit.aes=F,show.legend=F) 
 			
 		# hggplot3 <- hggplot2 + geom_segment(data=seg2, aes(x=x+1,xend=xend+1, 
@@ -128,8 +128,8 @@ RegionHeatmap <- function(inputmat, binvector=NULL, type_mat=type_mat,
 			hggplot3 <- hggplot  +
 			ggplot2::geom_text(aes(Var2, Var1, label = value), 
 			color = c("black"), size = size.txt) +
-			ggplot2::geom_segment(data=seg, aes(x=x+0.5,xend=xend+0.5, 
-			y=y+0.5,yend=yend+0.5), size=1, inherit.aes=F)	+ 
+			ggplot2::geom_segment(data=seg, aes(x=as.numeric(x)+0.5,xend=as.numeric(xend)+0.5, 
+			y=as.numeric(y)+0.5,yend=as.numeric(yend)+0.5), size=1, inherit.aes=F)	+ 
 			ggplot2::scale_color_manual(values=colvect)
 			return(hggplot3)
 	 }  
