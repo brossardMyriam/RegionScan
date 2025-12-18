@@ -34,3 +34,8 @@ Bioinformatics Advances, vbaf052, https://doi.org/10.1093/bioadv/vbaf052
 
 ## License
 This package is released under the [GNU General Public License (GPL) v3.0.](https://www.gnu.org/licenses/gpl-3.0.html)
+
+## Dashboard - NEW !!!
+An online dashboard for **exploring and visualizing** RegionScan outputs is now available. Simply upload your RegionScan output files, and the dashboard will generate **interactive visualizations**, including:
+QQ plots, Miami plots, locus-level plots with options for gene annotations and recombination rate displays—as well, as well as tools for filtering results and exporting tables. These features are designed to facilitate investigation and comparison of results across methods, regions, and more! The dashboard is implemented in a flexible way and can also accommodate additional region-level tests beyond those currently implemented in RegionScan, provided the input files follow a similar format. For more details, please visit the [RegionScan dashboard page!](https://bulllab-lunenfeld.github.io/region-scan-dashboard/)
+![image](https://github.com/brossardMyriam/RegionScan/blob/main/RegionScan_dashboard.png)
