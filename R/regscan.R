@@ -368,7 +368,7 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 			#if(isTRUE(singleSNPall)) { 
 			#	outsingleSNPall <- data.frame(chr=chr, region=region, start.bp=start, end.bp=end, bin=1, 
 			#				 processout$SNPinfo[,c("bp","multiallelic","ref","alt","maf")], sgout)
-			}	
+			#}	
 				
 			regionout<-data.frame(chr=chr, region=region, start.bp=start, end.bp=end, 
 				nSNPs=nSNPs, nSNPs.kept=nSNPs.kept, maxVIF="NA",
