@@ -21,11 +21,9 @@ Imports:
     karyoploteR
 Suggests:
     knitr,
-    rmarkdown,
-    R.rsp
+    rmarkdown
 VignetteBuilder:
-    knitr,
-    R.rsp
+    knitr
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
