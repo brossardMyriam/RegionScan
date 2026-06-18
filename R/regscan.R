@@ -365,10 +365,10 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 				mglm.se=glmout$beta_SE, mglm.pvalue=glmout$p_g )
 
 			#added on 6/17/2026
-			#if(isTRUE(singleSNPall)) { 
-			#	outsingleSNPall <- data.frame(chr=chr, region=region, start.bp=start, end.bp=end, bin=1, 
-			#				 processout$SNPinfo[,c("bp","multiallelic","ref","alt","maf")], sgout)
-			#}	
+			if(isTRUE(singleSNPall)) { 
+				outsingleSNPall <- data.frame(chr=chr, region=region, start.bp=start, end.bp=end, 
+					bin=1, processout$SNPinfo[,c("bp","multiallelic","ref","alt","maf")], sgout)
+			}	
 				
 			regionout<-data.frame(chr=chr, region=region, start.bp=start, end.bp=end, 
 				nSNPs=nSNPs, nSNPs.kept=nSNPs.kept, maxVIF="NA",
